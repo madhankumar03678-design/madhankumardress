@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart</title>
+<style>
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    min-height: 100vh;
+  }
+  .cart-container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+    header {
+      background-color: #0c08f0;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 8px 12px;
+      background-color: #ff4e50;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      background-color: #ff0000;
+    }
+
+ h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap; /* Wrap on small screens */
+  }
+
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .cart-item h4 {
+    flex: 1 1 100px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+
+  .cart-item p {
+    margin: 0 15px 10px 0;
+    font-weight: bold;
+  }
+
+  .remove-btn {
+    background: crimson;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .remove-btn:hover {
+    background: darkred;
+  }
+
+  .total-box {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .checkout-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    margin-top: 15px;
+    transition: 0.3s;
+  }
+
+  .checkout-btn:hover {
+    background: #3e8e41;
+  }
+
+  p.empty {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin: 20px 0;
+  }
+
+  /* Mobile responsiveness */
+  @media screen and (max-width: 600px) {
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cart-item h4, .cart-item p {
+      margin-left: 0;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      margin-top: 20px;
+      float: none;
+    }
+
+    .total-box {
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+    <header>
+        <h2>Womens Collection</h2>
+        <a href="index.html">Home</a>
+      </header>
+
+<div class="cart-container">
+  <h2>🛒 My Cart</h2>
+  <div id="cartBox"></div>
+  <div class="total-box" id="total"></div>
+  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let box = document.getElementById("cartBox");
+let totalBox = document.getElementById("total");
+
+function showCart() {
+  box.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    box.innerHTML = '<p class="empty">Your cart is empty 😔</p>';
+    totalBox.innerText = "";
+    return;
+  }
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    box.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}">
+        <h4>${item.name}</h4>
+        <p>₹${item.price}</p>
+        <button class="remove-btn" onclick="removeItem(${index})">❌</button>
+      </div>
+    `;
+  });
+
+  totalBox.innerText = "Total: ₹" + total;
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  showCart();
+}
+
+function checkout() {
+  if(cart.length === 0){
+    alert("Your cart is empty!");
+    return;
+  }
+  window.location.href = "checkout.html";
+}
+
+showCart();
+</script>
+
+</body>
+</html>

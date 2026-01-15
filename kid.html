@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kids Collection</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #a5f585, #a5f082);
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #089748;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 8px 12px;
+      background-color: #ff4e50;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      background-color: #ff0000;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .card .price {
+      margin-bottom: 12px;
+      font-weight: bold;
+      color: #ff4e50;
+      font-size: 16px;
+    }
+
+    /* Button styles */
+    .cart-btn {
+      background-color: #ff7eb3; /* pink */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin: 5px;
+    }
+
+    .cart-btn:hover {
+      background-color: #ff4e50; /* darker pink on hover */
+    }
+
+    .buy-btn {
+      background-color: #4CAF50; /* green */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin: 5px;
+    }
+
+    .buy-btn:hover {
+      background-color: #45a049; /* darker green on hover */
+    }
+
+    @media (max-width: 500px) {
+      .card img {
+        height: 150px;
+      
+    }
+  </style
+</head>
+<body>
+
+  <header>
+    <h2>Kids Collection</h2>
+    <a href="index.html">Home</a>
+  </header>
+
+  <section class="products" id="productList"></section>
+
+  <script>
+    const products = [
+    {id:1, name:'Floral Frock', price:699, img:'k1.jpg'},
+    {id:2, name:'Striped T-Shirt', price:499, img:'k2.jpg'},
+    {id:3, name:'Denim Shorts', price:799, img:'k3.jpg'},
+    {id:4, name:'Casual Dress', price:999, img:'k4.jpg'},
+    {id:5, name:'Cotton Skirt', price:599, img:'k5.jpg'},
+    {id:6, name:'Hooded Jacket', price:1099, img:'k6.jpg'},
+    {id:7, name:'Printed Tee', price:449, img:'k7.jpg'},
+    {id:8, name:'Party Frock', price:1199, img:'k8.jpg'},
+    {id:9, name:'Summer Shorts', price:499, img:'k9.jpg'},
+    {id:10, name:'School Uniform', price:899, img:'k10.jpg'},
+    {id:11, name:'Peplum Dress', price:699, img:'k11.jpg'},
+    {id:12, name:'Polo T-Shirt', price:599, img:'k12.jpg'},
+    {id:13, name:'Jogger Pants', price:799, img:'k13.jpg'},
+    {id:14, name:'Denim Dress', price:1099, img:'k14.jpg'},
+    {id:15, name:'Fleece Jacket', price:1299, img:'k15.jpg'},
+    {id:16, name:'Graphic Tee', price:499, img:'k16.jpg'},
+    {id:17, name:'Princess Frock', price:1399, img:'k17.jpg'},
+    {id:18, name:'Cargo Shorts', price:799, img:'k18.jpg'},
+    {id:19, name:'Winter Coat', price:1799, img:'k19.jpg'},
+    {id:20, name:'Linen Dress', price:1199, img:'k20.jpg'},
+    {id:21, name:'Striped Frock', price:899, img:'k21.jpg'},
+    {id:22, name:'Checked Shirt', price:699, img:'k22.jpg'},
+    {id:23, name:'Summer Tee', price:499, img:'k23.jpg'},
+    {id:24, name:'Party Dress', price:1299, img:'k24.jpg'},
+    {id:25, name:'Denim Shorts Set', price:1099, img:'k25.jpg'},
+    {id:26, name:'Sweatshirt', price:999, img:'k26.jpg'},
+    {id:27, name:'Peach Dress', price:699, img:'k27.jpg'},
+    {id:28, name:'Casual Tee', price:449, img:'k28.jpg'},
+    {id:29, name:'Skater Dress', price:1199, img:'k29.jpg'},
+    {id:30, name:'Track Pants', price:799, img:'k30.jpg'}
+  
+    ];
+
+    const list = document.getElementById('productList');
+
+    products.forEach(p => {
+      list.innerHTML += `
+        <div class="card">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="card-content">
+            <h3>${p.name}</h3>
+            <div class="price">₹${p.price}</div>
+            <div class="btns">
+              <button class="cart-btn" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+              <button class="buy-btn" onclick='buyNow(${JSON.stringify(p)})'>Buy Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    function addToCart(product){
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product.name + ' added to cart');
+    }
+
+    function buyNow(product){
+      localStorage.setItem('cart', JSON.stringify([product]));
+      window.location.href = 'checkout.html';
+    }
+  </script>
+
+</body>
+</html>

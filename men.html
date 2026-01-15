@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Men Collection</title>
+  <style>
+    *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #d7a8ec, #d1a7ec);
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #9314e7;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 8px 12px;
+      background-color: #ff4e50;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      background-color: #ff0000;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: rgb(248, 247, 247);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .card .price {
+      margin-bottom: 12px;
+      font-weight: bold;
+      color: #ff4e50;
+      font-size: 16px;
+    }
+
+    .card button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    /* Cart button color */
+    .card button.cart-btn {
+      background-color: #ff7eb3; /* Pink */
+      color: white;
+    }
+
+    .card button.cart-btn:hover {
+      background-color: #ff4e50; /* Darker pink on hover */
+    }
+
+    /* Buy button color */
+    .card button.buy-btn {
+      background-color: #4CAF50; /* Green */
+      color: white;
+    }
+
+    .card button.buy-btn:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+
+    @media (max-width: 500px) {
+      .card img {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>Mens Collection</h2>
+  <a href="index.html">Home</a>
+</header>
+
+<section class="products" id="productList"></section>
+
+<script>
+const products = [
+  {id:1,name:'Men Shirt',price:999,img:'m1.jpg'},
+  {id:2,name:'Formal Shirt',price:1199,img:'m2.jpg'},
+  {id:3,name:'T-Shirt',price:799,img:'m3.jpg'},
+  {id:4,name:'Jeans',price:1499,img:'m4.jpg'},
+  {id:5,name:'Cotton Pant',price:1399,img:'m5.jpg'},
+  {id:6,name:'Track Pant',price:999,img:'m6.jpg'},
+  {id:7,name:'Hoodie',price:1799,img:'m7.jpg'},
+  {id:8,name:'Blazer',price:3499,img:'m8.jpg'},
+  {id:9,name:'Kurta',price:1299,img:'m9.jpg'},
+  {id:10,name:'Jacket',price:2199,img:'m10.jpg'},
+  {id:11,name:'Casual Shirt',price:1099,img:'m11.jpg'},
+  {id:12,name:'Denim Jacket',price:2499,img:'m12.jpg'},
+  {id:13,name:'Printed Shirt',price:899,img:'m13.jpg'},
+  {id:14,name:'Slim Fit Jeans',price:1599,img:'m14.jpg'},
+  {id:15,name:'Sweatshirt',price:1699,img:'m15.jpg'},
+  {id:16,name:'Cargo Pant',price:1899,img:'m16.jpg'},
+  {id:17,name:'Linen Shirt',price:1299,img:'m17.jpg'},
+  {id:18,name:'Bomber Jacket',price:2799,img:'m18.jpg'},
+  {id:19,name:'Ethnic Kurta',price:1499,img:'m19.jpg'},
+  {id:20,name:'Formal Pant',price:1699,img:'m20.jpg'},
+  {id:21,name:'Checked Shirt',price:999,img:'m21.jpg'},
+  {id:22,name:'Polo T-Shirt',price:899,img:'m22.jpg'},
+  {id:23,name:'Winter Jacket',price:3599,img:'m23.jpg'},
+  {id:24,name:'Party Blazer',price:3999,img:'m24.jpg'},
+  {id:25,name:'Track Suit',price:1999,img:'m25.jpg'},
+  {id:26,name:'Sports Shorts',price:699,img:'m26.jpg'},
+  {id:27,name:'Cotton Kurta',price:1199,img:'m27.jpg'},
+  {id:28,name:'Casual Trousers',price:1399,img:'m28.jpg'},
+  {id:29,name:'Hooded Jacket',price:2599,img:'m29.jpg'},
+  {id:30,name:'Denim Shorts',price:899,img:'m30.jpg'}
+
+];
+
+const list = document.getElementById('productList');
+
+products.forEach(p=>{
+  list.innerHTML += `
+    <div class="card">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="card-content">
+        <h3>${p.name}</h3>
+        <div class="price">₹${p.price}</div>
+        <div class="btns">
+          <button class="cart-btn" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+          <button class="buy-btn" onclick='buyNow(${JSON.stringify(p)})'>Buy Now</button>
+        </div>
+      </div>
+    </div>`;
+});
+
+function addToCart(product){
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push(product);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(product.name + ' added to cart');
+}
+
+function buyNow(product){
+  localStorage.setItem('cart', JSON.stringify([product]));
+  window.location.href = 'checkout.html';
+}
+</script>
+
+</body>
+</html>
